@@ -30,23 +30,21 @@ Takes a connection, collects all nodes from the edges, and filters out nulls.
 
 Whenever you use a connection (with or without the `@connection`-annotation)...
 
-```javascript
-graphql`
-  fragment SomeFragment_user on User {
-    pets(first: 10) @connection(key: "SomeFragment_user_pets") {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      edges {
-        node {
-          id
-          name
-        }
+```graphql
+fragment SomeFragment_user on User {
+  pets(first: 10) @connection(key: "SomeFragment_user_pets") {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        id
+        name
       }
     }
   }
-`;
+}
 ```
 
 ...and you want to map over or just use the connection nodes, you can use `collectConnectionNodes`:
