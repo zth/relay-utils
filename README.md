@@ -22,6 +22,9 @@ This package contains utilities for working with Relay (modern) in general, and 
 
 ## Usage
 
+_NOTE_ A lot of these helpers assume that you're using `graphql-relay-js` style data IDs that are a combination of a database id and a typename.
+Please file an issue if you don't and would like to use this package still.
+
 ### collectConnectionNodes
 
 Takes a connection, collects all nodes from the edges, and filters out nulls.
