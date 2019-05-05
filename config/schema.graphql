@@ -1,0 +1,69 @@
+schema {
+  query: RootQuery
+  mutation: Mutation
+}
+
+type RootQuery {
+  viewer: User
+  User(userId: ID!): User
+  Pet(petId: ID!): Pet
+}
+
+type User {
+  id: ID!
+  _id: ID!
+  name: String!
+  age: Int
+  pets(first: Int, after: String, last: Int, before: String): PetConnection
+  favoritePet: Pet
+}
+
+type Pet {
+  id: ID!
+  _id: ID!
+  name: String!
+  owner: User
+  type: PetType
+  grade: Grade
+}
+
+enum PetType {
+  CAT
+  DOG
+}
+
+type PetConnection {
+  pageInfo: PageInfo!
+  edges: [PetEdge]
+}
+
+type PetEdge {
+  node: Pet
+  cursor: String
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  endCursor: String
+  startCursor: String
+}
+
+enum Grade {
+  A
+  B
+  C
+}
+
+input SetPetGradeInput {
+  petId: ID!
+  grade: Grade!
+}
+
+type SetPetGradePayload {
+  pet: Pet!
+}
+
+type Mutation {
+  setPetGrade(input: SetPetGradeInput!): SetPetGradePayload
+}

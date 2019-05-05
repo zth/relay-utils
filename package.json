@@ -1,0 +1,73 @@
+{
+  "name": "relay-utils",
+  "version": "0.1.0",
+  "main": "lib/index.js",
+  "author": "Gabriel Nordeborn",
+  "license": "MIT",
+  "sideEffects": false,
+  "repository": "https://github.com/zth/relay-utils",
+  "description": "Utilities for working with Relay (modern) in general, and the Relay store in particular.",
+  "scripts": {
+    "build": "yarn test && rm -rf lib && babel src --out-dir lib --ignore **/*-tests.js && yarn flow:copy",
+    "prepublish": "yarn flow && yarn test && yarn build",
+    "flow:copy": "flow-copy-source src lib",
+    "relay": "relay-compiler --src tests --schema config/schema.graphql --artifactDirectory tests/__generated__ --language js-flow-uncommented",
+    "graphql:generate-assets": "graphql-generate-flow-schema-assets -s ./config/schema.graphql --enums --object-types --enums-file-path ./tests/constants/enums.js --object-types-file-path ./tests/constants/object-types.js",
+    "test": "yarn flow && yarn jest"
+  },
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "lib",
+    "yarn.lock"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "keywords": [
+    "graphql",
+    "relay",
+    "relaymodern"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "prettier": {
+    "tabWidth": 2,
+    "semi": true,
+    "singleQuote": true,
+    "printWidth": 80
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-flow": "^7.0.0",
+    "flow-bin": "^0.98.0",
+    "flow-copy-source": "^2.0.4",
+    "flow-typed": "^2.5.1",
+    "graphql": "^14.2.1",
+    "graphql-generate-flow-schema-assets": "^1.0.0",
+    "husky": "^2.2.0",
+    "jest": "^24.7.1",
+    "lint-staged": "^8.1.6",
+    "prettier": "^1.17.0",
+    "react-relay": "^4.0.0",
+    "relay-compiler": "^4.0.0",
+    "relay-compiler-language-js-flow-uncommented": "^1.1.0",
+    "relay-runtime": "^4.0.0"
+  },
+  "peerDependencies": {
+    "relay-compiler": ">=1.7.0-rc.1",
+    "relay-runtime": "*"
+  }
+}
